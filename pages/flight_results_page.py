@@ -48,8 +48,10 @@ class FlightResultsPage:
 
     def select_cheapest_flight(self, section_index):
         cheapest_flight, cheapest_price = self.get_cheapest_flight(section_index)
+        selected_details = self.get_flight_details(cheapest_flight)
+        selected_details["section"] = self.get_section_title(section_index)
         cheapest_flight.locator("button").click()
-        return cheapest_price
+        return selected_details
 
     def click_continue_to_passenger(self):
         self.continue_button.click()
@@ -60,4 +62,18 @@ class FlightResultsPage:
         first_flight = departure_flight.nth(0)
         flight_details = first_flight.inner_text().splitlines()
         return flight_details[1].strip()
+
+
+    def get_flight_details(self, flight):
+        flight_details = flight.inner_text().splitlines()
+
+        flight_name = flight_details[0].strip()
+        route = flight_details[1].strip()
+        price = self.get_flight_price(flight)
+
+        return {
+            "flight_name": flight_name,
+            "route": route,
+            "price": price
+        }
 

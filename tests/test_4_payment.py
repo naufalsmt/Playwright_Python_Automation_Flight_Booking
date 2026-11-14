@@ -5,7 +5,7 @@ from pages.passenger_details_page import PassengerDetailsPage
 from pages.payment_page import PaymentPage
 
 
-def test_payment_page(search_flight):
+def test_payment_page(search_flight, selected_flight):
     print('\n\nPASS: Flight has been searched successfully')
 
     flight_results = FlightResultsPage(search_flight)
@@ -34,13 +34,40 @@ def test_payment_page(search_flight):
     payment_page.verify_booking_summary()
     print('PASS: Booking summary displayed correctly')
     summary = payment_page.get_booking_summary_details()
+    # print('booking summary:', summary)
 
-    assert "AeroLink (AL248)" in summary, f'different departure flight displayed'
-    assert "AeroLink (AL348)" in summary, f'different return flight displayed'
-    assert "2 passengers" in summary, f'different number of passengers displayed'
-    assert "Business" in summary, f'different flight class displayed'
+    departure_flight = selected_flight.get_departure()['flight_name']
+    return_flight = selected_flight.get_return()['flight_name']
+    passenger_count = selected_flight.get_passenger_count()
+    # print('Passenger count:', passenger_count)
+    flight_class = selected_flight.get_flight_class()
+
+
+    # assert "AeroLink (AL248)" in summary, f'different departure flight displayed'
+    # assert "AeroLink (AL348)" in summary, f'different return flight displayed'
+    assert departure_flight in summary, f'different departure flight displayed'
+    assert return_flight in summary, f'different return flight displayed'
+    assert f'{passenger_count} passengers' in summary, f'Passenger counter incorrectly displayed'
+    assert flight_class in summary, f'different flight class displayed'
 
     print("PASS: Booking summary details are verified correctly")
+
+    departure = selected_flight.get_departure()
+    return_flight = selected_flight.get_return()
+
+    expected_total = (
+                             departure["price"] + return_flight["price"]
+                     ) * passenger_count
+
+    # print("Expected booking total:", expected_total)
+    actual_total = payment_page.get_total_amount()
+    # print("Actual booking total:", actual_total)
+
+    assert expected_total == actual_total, (
+    f"Booking total mismatch. "
+    f"Expected: ${expected_total}, Actual: ${actual_total}"
+    )
+    print('PASS: Booking total and payment total are equal')
 
     card_number= '4000000000000001'
     exp_date= '10/30'

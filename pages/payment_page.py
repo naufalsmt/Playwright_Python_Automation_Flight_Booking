@@ -17,7 +17,7 @@ class PaymentPage:
         self.booking_summary = page.locator(
             ".bg-light.border-0.mb-4.card"
         )
-
+        self.total_amount = page.locator('[data-testid="flight-total"]')
 
     def verify_payment_page_heading(self):
         expect(self.payment_heading).to_be_visible()
@@ -67,4 +67,10 @@ class PaymentPage:
 
     def verify_card_validation(self):
         return self.form.inner_text()
+
+
+    def get_total_amount(self):
+        amount_text = self.total_amount.inner_text()
+        return int(amount_text.replace("$", ""))
+
 

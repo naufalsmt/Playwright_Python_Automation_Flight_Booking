@@ -5,7 +5,7 @@ from pages.passenger_details_page import PassengerDetailsPage
 from pages.payment_page import PaymentPage
 from pages.booking_confirmation_page import BookingConfirmationPage
 
-def test_booking_confirmation(search_flight):
+def test_booking_confirmation(search_flight, selected_flight):
     print('\n\nPASS: Flight has been searched successfully')
 
     flight_results = FlightResultsPage(search_flight)
@@ -58,15 +58,32 @@ def test_booking_confirmation(search_flight):
 
     confirmation_detail = confirmation_page.get_confirmation_details()
     # print('confirmation detail:', confirmation_detail)
-    assert "AeroLink (AL248)" in confirmation_detail
-    assert "Dubai → London" in confirmation_detail
 
-    assert "AeroLink (AL348)" in confirmation_detail
-    assert "London → Dubai" in confirmation_detail
+    departure_flight = selected_flight.get_departure()
+    return_flight = selected_flight.get_return()
+
+    # assert "AeroLink (AL248)" in confirmation_detail
+    # assert "Dubai → London" in confirmation_detail
+    # assert "AeroLink (AL348)" in confirmation_detail
+    # assert "London → Dubai" in confirmation_detail
+
+    assert departure_flight['flight_name'] in confirmation_detail
+    assert departure_flight['route'] in confirmation_detail
+
+    assert return_flight['flight_name'] in confirmation_detail
+    assert return_flight['route'] in confirmation_detail
+
     print("PASS: Departure and return flights verified in the confirmation details.")
 
-    assert "Total paid (Business)" in confirmation_detail
-    assert "$1216" in confirmation_detail, f'Wrong amount displayed'
+    passenger_count = selected_flight.get_passenger_count()
+    flight_class = selected_flight.get_flight_class()
+
+    total_paid = (
+                             departure_flight["price"] + return_flight["price"]
+                     ) * passenger_count
+
+    assert f"Total paid ({flight_class})" in confirmation_detail
+    assert f"${total_paid}" in confirmation_detail, f'Wrong amount displayed'
     print('PASS: Booking amount and flight type are correctly displayed in the confirmation details.')
 
     confirmation_page.verify_new_booking_button()
