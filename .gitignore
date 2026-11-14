@@ -17,4 +17,4 @@ playwright-report/
 # Environment variables
 .env
 
-report/
+reports/
