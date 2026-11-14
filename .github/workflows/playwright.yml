@@ -32,7 +32,7 @@ jobs:
         run: python -m playwright install --with-deps chromium
 
       - name: Create report directory
-        run: mkdir -p report
+        run: mkdir -p reports
 
       - name: Run pytest and generated html report
         run: pytest -v --html=reports/report.html --self-contained-html
