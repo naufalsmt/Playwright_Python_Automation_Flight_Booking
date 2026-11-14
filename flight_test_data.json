@@ -1,0 +1,18 @@
+
+[
+    {
+        "departure": "Dubai",
+        "destination": "London",
+        "expected_route": "Dubai → London"
+    },
+    {
+        "departure": "London",
+        "destination": "Dubai",
+        "expected_route": "London → Dubai"
+    },
+    {
+        "departure": "Dubai",
+        "destination": "Tokyo",
+        "expected_route": "Dubai → Tokyo"
+    }
+]
