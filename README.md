@@ -1,4 +1,5 @@
 # ✈️ Flight Booking Automation Framework
+![CI]([![Playwright Python Automation](https://github.com/naufalsmt/Playwright_Python_Automation_Flight_Booking/actions/workflows/playwright.yml/badge.svg)](https://github.com/naufalsmt/Playwright_Python_Automation_Flight_Booking/actions/workflows/playwright.yml))
 
 ## Project Overview
 
