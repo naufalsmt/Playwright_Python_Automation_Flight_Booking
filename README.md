@@ -96,6 +96,17 @@ pytest tests/test_2_flight_selection.py -v
 
 GitHub Actions is integrated to execute automated tests through a workflow, supporting continuous testing and validation.
 
+## 🧪 Test Execution Summary
+
+| Area | Coverage |
+|---|---|
+| Flight Search | Search form and flight search workflow |
+| Form Validation | Positive and negative scenarios |
+| UI Validation | Page elements and user interactions 
+| Flight Results | Flight details and search results validation |
+| Test Framework | Python, Playwright and Pytest |
+| CI/CD | GitHub Actions |
+
 ## 👨‍💻 Author
 
 **Naufal Shamsudeen**
