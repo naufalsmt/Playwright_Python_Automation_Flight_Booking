@@ -63,7 +63,7 @@ git clone https://github.com/naufalsmt/Playwright_Python_Automation_Flight_Booki
 **2. Navigate to the project directory**
 
 ```bash
-cd Playwright Python Automation
+cd Playwright_Python_Automation_Flight_Booking
 ```
 
 **3. Install dependencies**
